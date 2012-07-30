@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="uppidy_app_id">8ae8f060d81d51e90fadabaab1414a97</string>
+    <string name="uppidy_app_secret">473e66d79ddc0e360851dc512fe0fb1e</string>
+    <string name="uppidy_oauth_callback_url">https://app.uppidy.com/ajax/auth/status?from=login-success</string>
+    <string name="uppidy_scope">"publish_stream,read_stream,user_about_me,email"</string>
+</resources>

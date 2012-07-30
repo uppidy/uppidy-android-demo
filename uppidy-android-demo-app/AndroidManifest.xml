@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.uppidy.android.demo.app"
+    android:versionCode="1"
+    android:versionName="12.07-SNAPSHOT" >
+
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="10" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
+    	
+    <application
+        android:name=".MainApplication"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <activity android:name=".UppidyActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".UppidyWebOAuthActivity"
+            android:excludeFromRecents="true"
+            android:noHistory="true" />
+        <activity android:name=".UppidyBrowseActivity" />
+        <activity android:name=".UppidySyncActivity" />
+
+        <service android:name=".SMSBackupService" >
+            <intent-filter>
+                <action android:name="com.uppidy.android.sdk.backup.START" />
+                <action android:name="com.uppidy.android.sdk.backup.STOP" />
+                <action android:name="com.uppidy.android.demo.SMS_BACKUP" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

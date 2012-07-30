@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.uppidy</groupId>
+	<artifactId>uppidy-android-demo</artifactId>
+	<version>12.07-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>com.uppidy.andoroid.demo</name>
+	<description>Uppidy Android Demo</description>
+	<url>https://develop.uppidy.com/public/docs/uppidy-android-samples</url>
+	<scm>
+		<connection>scm:git:ssh://git@github.com/uppidy/uppidy-android-demo.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/uppidy/uppidy-android-demo.git</developerConnection>
+		<url>https://github.com/uppidy/uppidy-android-demo</url>
+		<tag>HEAD</tag>
+	</scm>
+	<distributionManagement>
+		<repository>
+			<id>public-releases</id>
+			<name>libs-release-local</name>
+			<url>https://admin.uppidy.com/artifactory/libs-release-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>public-snapshots</id>
+			<name>libs-snapshot-local</name>
+			<url>https://admin.uppidy.com/artifactory/libs-snapshot-local</url>
+		</snapshotRepository>
+        <site>
+            <id>uppidy-android-demo-site</id>
+            <url>file:///var/www/develop/public/docs/uppidy-android-demo</url>
+        </site>
+	</distributionManagement>
+	<issueManagement>
+		<system>TRAC</system>
+		<url>https://admin.uppidy.com/trac</url>
+	</issueManagement>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<linkJavadoc>true</linkJavadoc>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+	<contributors>
+		<contributor>
+			<name>Alex Rudnev</name>
+			<email>arudnev@uppidy.com</email>
+			<roles>
+				<role>Technical Lead</role>
+			</roles>
+		</contributor>
+	</contributors>
+	<modules>
+		<module>uppidy-android-demo-app</module>
+		<module>uppidy-android-demo-it</module>
+	</modules>
+
+	<properties>
+		<android-platform>7</android-platform>
+		<android-emulator>7</android-emulator>
+		<android-maven-plugin-version>3.3.0</android-maven-plugin-version>
+		<maven-compiler-plugin-version>2.3.2</maven-compiler-plugin-version>
+		<maven-eclipse-plugin-version>2.9</maven-eclipse-plugin-version>
+		<android-version>2.1.2</android-version>
+		<!-- Available Android versions: 1.5_r3, 1.5_r4, 1.6_r2, 2.1.2, 2.1_r1, 2.2.1, 2.3.1, 2.3.3, 4.0.1.2 -->
+		<androlog-version>1.0.5</androlog-version>
+		<java-version>1.6</java-version>
+		<jackson-version>1.9.5</jackson-version>
+		<junit-version>4.10</junit-version>
+		<org.springframework.android-version>1.0.0.RELEASE</org.springframework.android-version>
+		<org.springframework.social-version>1.0.2.RELEASE</org.springframework.social-version>
+		<org.springframework.social-facebook-version>1.0.1.RELEASE</org.springframework.social-facebook-version>
+		<org.springframework.security-version>3.1.0.RELEASE</org.springframework.security-version>
+		<org.codehaus.jackson-version>1.9.7</org.codehaus.jackson-version>
+		<com.google.code.gson-version>2.2</com.google.code.gson-version>
+		<org.simpleframework-version>2.6.2</org.simpleframework-version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.google.android</groupId>
+				<artifactId>android</artifactId>
+				<version>${android-version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.google.android</groupId>
+				<artifactId>android-test</artifactId>
+				<version>${android-version}</version>
+				<scope>provided</scope>
+			</dependency>
+		
+			<!-- android 4x from the central repository -->
+			<!--
+			<dependency>
+				<groupId>com.google.android</groupId>
+				<artifactId>android</artifactId>
+				<version>4.0.1.2</version>
+				<scope>provided</scope>
+			</dependency>
+			-->
+			<!-- Support library (aka compatibility library) from the central repository 
+				as well note that this uses default scope (NOT provided) since the library 
+				will need to be added to your apk -->
+			<dependency>
+				<groupId>com.google.android</groupId>
+				<artifactId>support-v4</artifactId>
+				<version>r6</version>
+			</dependency>
+			
+			<!-- Androlog is a logging and reporting library for Android -->
+			<dependency>
+				<groupId>de.akquinet.android.androlog</groupId>
+				<artifactId>androlog</artifactId>
+				<version>${androlog-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.android</groupId>
+				<artifactId>spring-android-rest-template</artifactId>
+				<version>${org.springframework.android-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.android</groupId>
+				<artifactId>spring-android-auth</artifactId>
+				<version>${org.springframework.android-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-crypto</artifactId>
+				<version>${org.springframework.security-version}</version>
+				<exclusions>
+					<!-- Exclude in favor of Spring Android Core -->
+					<exclusion>
+						<artifactId>spring-core</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-core</artifactId>
+				<version>${org.springframework.social-version}</version>
+				<exclusions>
+					<!-- Exclude in favor of Spring Android RestTemplate -->
+					<exclusion>
+						<artifactId>spring-web</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<!-- Provided by Android -->
+					<exclusion>
+						<artifactId>commons-logging</artifactId>
+						<groupId>commons-logging</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-twitter</artifactId>
+				<version>${org.springframework.social-version}</version>
+				<exclusions>
+					<!-- Provided by Android -->
+					<exclusion>
+						<artifactId>commons-logging</artifactId>
+						<groupId>commons-logging</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.social</groupId>
+				<artifactId>spring-social-facebook</artifactId>
+				<version>${org.springframework.social-facebook-version}</version>
+				<exclusions>
+					<!-- Provided by Android -->
+					<exclusion>
+						<artifactId>commons-logging</artifactId>
+						<groupId>commons-logging</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<!-- Using Jackson for JSON marshaling -->
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-mapper-asl</artifactId>
+				<version>${org.codehaus.jackson-version}</version>
+			</dependency>
+			<dependency>
+				<!-- Using Gson for JSON marshaling -->
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${com.google.code.gson-version}</version>
+			</dependency>
+			<dependency>
+				<!-- Using Simple for XML marshaling -->
+				<groupId>org.simpleframework</groupId>
+				<artifactId>simple-xml</artifactId>
+				<version>${org.simpleframework-version}</version>
+				<exclusions>
+					<!-- StAX is not available on Android -->
+					<exclusion>
+						<artifactId>stax</artifactId>
+						<groupId>stax</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>stax-api</artifactId>
+						<groupId>stax</groupId>
+					</exclusion>
+					<!-- Provided by Android -->
+					<exclusion>
+						<artifactId>xpp3</artifactId>
+						<groupId>xpp3</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>android-maven-plugin</artifactId>
+					<version>${android-maven-plugin-version}</version>
+					<inherited>true</inherited>
+					<configuration>
+						<androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+						<assetsDirectory>${project.basedir}/assets</assetsDirectory>
+						<resourceDirectory>${project.basedir}/res</resourceDirectory>
+						<nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
+						<sdk>
+							<platform>${android-platform}</platform>
+						</sdk>
+						<deleteConflictingFiles>true</deleteConflictingFiles>
+						<undeployBeforeDeploy>true</undeployBeforeDeploy>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin-version}</version>
+					<inherited>true</inherited>
+					<configuration>
+						<source>${java-version}</source>
+						<target>${java-version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>1.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<tagNameFormat>@{project.version}</tagNameFormat>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-jarsigner-plugin</artifactId>
+					<version>1.2</version>
+					<inherited>true</inherited>
+					<configuration>
+						<removeExistingSignatures>true</removeExistingSignatures>
+						<archiveDirectory />
+						<archive>${project.build.directory}/${project.build.finalName}.${project.packaging}</archive>
+						<verbose>true</verbose>
+						<certs>true</certs>
+						<keystore>${sign.keystore}</keystore>
+						<alias>${sign.alias}</alias>
+						<storepass>${sign.storepass}</storepass>
+						<keypass>${sign.keypass}</keypass>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>com.pyx4me</groupId>
+					<artifactId>proguard-maven-plugin</artifactId>
+					<version>2.0.4</version>
+					<dependencies>
+						<dependency>
+							<groupId>net.sf.proguard</groupId>
+							<artifactId>proguard</artifactId>
+							<version>4.4</version>
+							<scope>runtime</scope>
+						</dependency>
+					</dependencies>
+					<configuration>
+						<proguardVersion>4.4</proguardVersion>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-enforcer-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>enforce-signing-properties</id>
+								<goals>
+									<goal>enforce</goal>
+								</goals>
+								<configuration>
+									<rules>
+										<requireProperty>
+											<property>sign.keystore</property>
+											<message>The 'sign.keystore' property is missing. It must
+												contain the path to the
+												keystore used to sign the
+												application.</message>
+										</requireProperty>
+										<requireFilesExist>
+											<files>
+												<file>${sign.keystore}</file>
+											</files>
+											<message>The 'sign.keystore' property does not point to a
+												file. It must contain the
+												path to the keystore used to sign
+												the application.</message>
+										</requireFilesExist>
+										<requireProperty>
+											<property>sign.alias</property>
+											<message>The 'sign.alias' property is missing. It must
+												contain the key alias used to
+												sign the application.</message>
+										</requireProperty>
+										<requireProperty>
+											<property>sign.storepass</property>
+											<message>The 'sign.storepass' property is missing. It must
+												contain the password of
+												the keystore used to sign the
+												application.
+											</message>
+										</requireProperty>
+										<requireProperty>
+											<property>sign.keypass</property>
+											<message>The 'sign.keypass' property is missing. It must
+												contain the password of the
+												key used to sign the application.</message>
+										</requireProperty>
+									</rules>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>linux</id>
+			<activation>
+				<os>
+					<family>unix</family>
+				</os>
+			</activation>
+			<properties>
+				<rt.jar.path>${java.home}/jre/lib/rt.jar</rt.jar.path>
+				<jsse.jar.path>${java.home}/jre/lib/jsse.jar</jsse.jar.path>
+			</properties>
+		</profile>
+		<!-- mac profile has to be after unix since running on mac will trigger 
+			both -->
+		<profile>
+			<id>mac</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<!-- absolute path -->
+				<!--<rt.jar.path>/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Classes/classes.jar</rt.jar.path> -->
+				<!-- or with JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home/ -->
+				<rt.jar.path>${java.home}/../Classes/classes.jar</rt.jar.path>
+				<jsse.jar.path>${java.home}/../Classes/jsse.jar</jsse.jar.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<properties>
+				<rt.jar.path>${java.home}/jre/lib/rt.jar</rt.jar.path>
+				<jsse.jar.path>${java.home}/jre/lib/jsse.jar</jsse.jar.path>
+			</properties>
+		</profile>
+	</profiles>
+
+			<repositories>
+				<repository>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<id>central</id>
+					<name>libs-release</name>
+					<url>http://develop.uppidy.com/artifactory/libs-release</url>
+				</repository>
+				<repository>
+					<snapshots />
+					<id>snapshots</id>
+					<name>libs-snapshot</name>
+					<url>http://develop.uppidy.com/artifactory/libs-snapshot</url>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+					<id>central</id>
+					<name>plugins-release</name>
+					<url>http://develop.uppidy.com/artifactory/plugins-release</url>
+				</pluginRepository>
+				<pluginRepository>
+					<snapshots />
+					<id>snapshots</id>
+					<name>plugins-snapshot</name>
+					<url>http://develop.uppidy.com/artifactory/plugins-snapshot</url>
+				</pluginRepository>
+			</pluginRepositories>
+
+</project>
