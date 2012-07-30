@@ -17,9 +17,9 @@ import android.provider.ContactsContract.PhoneLookup;
 import com.uppidy.android.sdk.backup.BackupService;
 import com.uppidy.android.sdk.backup.MessageProvider;
 import com.uppidy.android.sdk.social.api.Uppidy;
-import com.uppidy.server.api.Contact;
-import com.uppidy.server.api.Message;
-import com.uppidy.server.api.Reference;
+import com.uppidy.android.sdk.social.api.Contact;
+import com.uppidy.android.sdk.social.api.Message;
+import com.uppidy.android.sdk.social.api.Reference;
 
 public class SMSBackupService extends BackupService
 {	

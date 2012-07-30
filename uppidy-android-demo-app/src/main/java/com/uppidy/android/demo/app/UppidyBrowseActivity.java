@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.uppidy.android.sdk.social.api.Uppidy;
-import com.uppidy.server.api.Message;
+import com.uppidy.android.sdk.social.api.Message;
 
 /**
  * @author arudnev@uppidy.com

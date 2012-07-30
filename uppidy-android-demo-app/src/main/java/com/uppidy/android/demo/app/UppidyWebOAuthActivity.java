@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.uppidy.android.sdk.R;
 import com.uppidy.android.sdk.social.api.Uppidy;
 import com.uppidy.android.sdk.social.connect.UppidyConnectionFactory;
-import com.uppidy.server.api.Container;
+import com.uppidy.android.sdk.social.api.Container;
 
 /**
  * @author arudnev@uppidy.com

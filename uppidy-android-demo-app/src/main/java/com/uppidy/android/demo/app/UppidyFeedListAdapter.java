@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.uppidy.server.api.Message;
-import com.uppidy.server.api.Reference;
+import com.uppidy.android.sdk.social.api.Message;
+import com.uppidy.android.sdk.social.api.Reference;
 
 /**
  * @author arudnev@uppidy.com
