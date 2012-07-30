@@ -1,4 +1,4 @@
-package org.uppidy.android.demo.test;
+package com.uppidy.android.demo.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 
