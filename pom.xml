@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.uppidy</groupId>
@@ -26,10 +27,10 @@
 			<name>libs-snapshot-local</name>
 			<url>https://admin.uppidy.com/artifactory/libs-snapshot-local</url>
 		</snapshotRepository>
-        <site>
-            <id>uppidy-android-demo-site</id>
-            <url>file:///var/www/develop/public/docs/uppidy-android-demo</url>
-        </site>
+		<site>
+			<id>uppidy-android-demo-site</id>
+			<url>file:///var/www/develop/public/docs/uppidy-android-demo</url>
+		</site>
 	</distributionManagement>
 	<issueManagement>
 		<system>TRAC</system>
@@ -78,7 +79,8 @@
 		<maven-compiler-plugin-version>2.3.2</maven-compiler-plugin-version>
 		<maven-eclipse-plugin-version>2.9</maven-eclipse-plugin-version>
 		<android-version>2.1.2</android-version>
-		<!-- Available Android versions: 1.5_r3, 1.5_r4, 1.6_r2, 2.1.2, 2.1_r1, 2.2.1, 2.3.1, 2.3.3, 4.0.1.2 -->
+		<!-- Available Android versions: 1.5_r3, 1.5_r4, 1.6_r2, 2.1.2, 2.1_r1, 
+			2.2.1, 2.3.1, 2.3.3, 4.0.1.2 -->
 		<androlog-version>1.0.5</androlog-version>
 		<java-version>1.6</java-version>
 		<jackson-version>1.9.5</jackson-version>
@@ -106,16 +108,10 @@
 				<version>${android-version}</version>
 				<scope>provided</scope>
 			</dependency>
-		
+
 			<!-- android 4x from the central repository -->
-			<!--
-			<dependency>
-				<groupId>com.google.android</groupId>
-				<artifactId>android</artifactId>
-				<version>4.0.1.2</version>
-				<scope>provided</scope>
-			</dependency>
-			-->
+			<!-- <dependency> <groupId>com.google.android</groupId> <artifactId>android</artifactId> 
+				<version>4.0.1.2</version> <scope>provided</scope> </dependency> -->
 			<!-- Support library (aka compatibility library) from the central repository 
 				as well note that this uses default scope (NOT provided) since the library 
 				will need to be added to your apk -->
@@ -124,7 +120,7 @@
 				<artifactId>support-v4</artifactId>
 				<version>r6</version>
 			</dependency>
-			
+
 			<!-- Androlog is a logging and reporting library for Android -->
 			<dependency>
 				<groupId>de.akquinet.android.androlog</groupId>
@@ -424,37 +420,36 @@
 		</profile>
 	</profiles>
 
-			<repositories>
-				<repository>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-					<id>central</id>
-					<name>libs-release</name>
-					<url>http://develop.uppidy.com/artifactory/libs-release</url>
-				</repository>
-				<repository>
-					<snapshots />
-					<id>snapshots</id>
-					<name>libs-snapshot</name>
-					<url>http://develop.uppidy.com/artifactory/libs-snapshot</url>
-				</repository>
-			</repositories>
-			<pluginRepositories>
-				<pluginRepository>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-					<id>central</id>
-					<name>plugins-release</name>
-					<url>http://develop.uppidy.com/artifactory/plugins-release</url>
-				</pluginRepository>
-				<pluginRepository>
-					<snapshots />
-					<id>snapshots</id>
-					<name>plugins-snapshot</name>
-					<url>http://develop.uppidy.com/artifactory/plugins-snapshot</url>
-				</pluginRepository>
-			</pluginRepositories>
-
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>central</id>
+			<name>libs-release</name>
+			<url>http://develop.uppidy.com/artifactory/libs-release</url>
+		</repository>
+		<repository>
+			<snapshots />
+			<id>snapshots</id>
+			<name>libs-snapshot</name>
+			<url>http://develop.uppidy.com/artifactory/libs-snapshot</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>central</id>
+			<name>plugins-release</name>
+			<url>http://develop.uppidy.com/artifactory/plugins-release</url>
+		</pluginRepository>
+		<pluginRepository>
+			<snapshots />
+			<id>snapshots</id>
+			<name>plugins-snapshot</name>
+			<url>http://develop.uppidy.com/artifactory/plugins-snapshot</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
