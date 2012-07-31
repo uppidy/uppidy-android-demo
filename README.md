@@ -32,7 +32,7 @@ instructions on building from [Eclipse](http://eclipse.org).
 ## Acknowledgements
 
 This project uses the [Uppidy Android SDK](https://github.com/uppidy/uppidy-android-sdk)
-built on top of [API 12.07](http://develop.uppidy.com/).
+built on top of [Uppidy API 12.07](http://develop.uppidy.com/).
 
 It also uses many other open source libraries such as:
 
