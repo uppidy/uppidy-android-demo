@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.social.connect.ConnectionRepository;
 
@@ -16,10 +18,10 @@ import android.provider.ContactsContract.PhoneLookup;
 
 import com.uppidy.android.sdk.backup.BackupService;
 import com.uppidy.android.sdk.backup.MessageProvider;
-import com.uppidy.android.sdk.social.api.Uppidy;
 import com.uppidy.android.sdk.social.api.Contact;
+import com.uppidy.android.sdk.social.api.ContactInfo;
 import com.uppidy.android.sdk.social.api.Message;
-import com.uppidy.android.sdk.social.api.Reference;
+import com.uppidy.android.sdk.social.api.Uppidy;
 
 public class SMSBackupService extends BackupService
 {	
@@ -147,7 +149,7 @@ public class SMSBackupService extends BackupService
 			
 			cursor.moveToFirst();
 			int size = cursor.getCount();
-			Reference me = context.getContainer().getOwner().createReference();
+			ContactInfo me = context.getContainer().getOwner();
 			for( int i = 0; i < num && i < size; i++, cursor.moveToNext() )
 			{
 				String mID = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
@@ -157,19 +159,19 @@ public class SMSBackupService extends BackupService
 				int type = cursor.getInt(cursor.getColumnIndexOrThrow("type"));
 				Message m = new Message();
 				m.setId( mID );
-				Reference addressRef = new Reference();
-				addressRef.setId(smsAddress);
+				ContactInfo other = new ContactInfo();
+				other.setAddress(smsAddress);
 				switch( type )
 				{
 					case SMS_TYPE_IN: 
-						m.setFrom( addressRef );
+						m.setFrom( other );
 						m.setTo(Collections.singletonList( me ) );
 						m.setSent( false );
 						break;
 					//case SMS_TYPE_SENT:
 					default:
 						m.setFrom(me);
-						m.setTo( Collections.singletonList( addressRef ) ); 
+						m.setTo( Collections.singletonList( other ) ); 
 						m.setSent( true );
 						break;
 				}
@@ -185,6 +187,9 @@ public class SMSBackupService extends BackupService
 		{
 			if (phoneNumber == null ) return null; 
 			Contact contact = new Contact();
+			// temp variables to hold the contact information
+			String name = phoneNumber;
+			String number = phoneNumber;
 			if( phoneNumber.length() != 0 ) 
 			{
 				Uri lookupUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
@@ -193,26 +198,22 @@ public class SMSBackupService extends BackupService
 																				null, null, null );
 				if (contactsCursor.moveToFirst()) 
 				{
-					// temp variables to hold the contact information
-					String name = contactsCursor.getString(contactsCursor.getColumnIndexOrThrow(PhoneLookup.DISPLAY_NAME));
-					String number = contactsCursor.getString(contactsCursor.getColumnIndexOrThrow(PhoneLookup.NUMBER));
-
 					// we create a contact with the number and name as they are stored by the user
-					contact.setName( name );
-					contact.setAddress( number );
+					name = contactsCursor.getString(contactsCursor.getColumnIndexOrThrow(PhoneLookup.DISPLAY_NAME));
+					number = contactsCursor.getString(contactsCursor.getColumnIndexOrThrow(PhoneLookup.NUMBER));
 				} 
-				else // No contact was found with that phone number, set the phone number as name 
-				{
-					contact.setName( phoneNumber );
-					contact.setAddress( phoneNumber );
-				}
+				
 				contactsCursor.close();
 			} 
 			else // no phone number provided 
 			{
-				contact.setName("Unknown");
-				contact.setAddress("Unknown");
+				name = "Unknown";
+				number = "Unknown";
 			}
+			contact.setName( name );
+			Map<String, List<String>> addressByType = new HashMap<String, List<String>>();
+			addressByType.put("phone", Collections.singletonList(number));
+			contact.setAddressByType(addressByType);
 			return contact;
 		}
 	}

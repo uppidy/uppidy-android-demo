@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.uppidy.android.sdk.social.api.ContactInfo;
 import com.uppidy.android.sdk.social.api.Message;
-import com.uppidy.android.sdk.social.api.Reference;
 
 /**
  * @author arudnev@uppidy.com
@@ -36,17 +36,21 @@ public class UppidyFeedListAdapter extends BaseAdapter {
         return position;
     }
     
-    private String toString(Reference ref) {
-    	return ref.getName() == null ? ref.getId() : (ref.getName() + "[" + ref.getId() + "]");
+    private String toString(ContactInfo ref) {
+    	if(ref == null) return null;
+    	return ref.toString();
     }
-    private String toString(List<Reference> refs) {
+    
+    private String toString(List<ContactInfo> refs) {
     	String sep = "";
     	StringBuffer result = new StringBuffer();
-    	for(Reference ref : refs) {
+    	result.append("[");
+    	for(ContactInfo ref : refs) {
     		result.append(sep);
-    		result.append(toString(ref));
+    		result.append(ref);
     		sep = ", ";
     	}
+    	result.append("]");
     	return result.toString();
     }
 
