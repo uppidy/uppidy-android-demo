@@ -21,7 +21,7 @@ the `ANDROID_HOME` environment variable to the location of your SDK:
 
 After satisfying those requirements, the build is pretty simple:
 
-* Run 'mvn clean package` from the `uppidy-android-demo-app` directory to build the APK only
+* Run `mvn clean package` from the `uppidy-android-demo-app` directory to build the APK only
 * Run `mvn clean install` from the root directory to build the app and also run
   the integration tests, this requires a connected Android device or running
   emulator
@@ -41,7 +41,8 @@ It also uses many other open source libraries such as:
 * [android-maven-plugin](https://github.com/jayway/maven-android-plugin)
 
 These are just a few of the major dependencies, the entire list of dependencies
-is listed in the [Uppidy Android SDK's POM file](https://github.com/uppidy/uppidy-android-sdk/blob/master/uppidy-android-sdk/pom.xml).
+is listed in the [app's POM file](https://github.com/uppidy/uppidy-android-demo/blob/master/uppidy-android-demo-app/pom.xml).
+Most of those dependencies are actually coming from the [sdk's POM file](https://github.com/uppidy/uppidy-android-sdk/blob/master/pom.xml).
 
 ## Contributing
 
