@@ -6,8 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.uppidy.android.sdk.social.api.Uppidy;
-import com.uppidy.android.sdk.social.api.Message;
+import com.uppidy.android.sdk.api.ApiMessage;
+import com.uppidy.android.sdk.api.Uppidy;
 
 /**
  * @author arudnev@uppidy.com
@@ -36,7 +36,7 @@ public class UppidyBrowseActivity extends AbstractAsyncListActivity {
 	// ***************************************
 	// Private methods
 	// ***************************************
-	private void showResult(List<Message> entries) {
+	private void showResult(List<ApiMessage> entries) {
 		UppidyFeedListAdapter adapter = new UppidyFeedListAdapter(this, entries);
 		setListAdapter(adapter);
 	}
@@ -44,7 +44,7 @@ public class UppidyBrowseActivity extends AbstractAsyncListActivity {
 	// ***************************************
 	// Private classes
 	// ***************************************
-	private class FetchFeedTask extends AsyncTask<Void, Void, List<Message>> {
+	private class FetchFeedTask extends AsyncTask<Void, Void, List<ApiMessage>> {
 
 		@Override
 		protected void onPreExecute() {
@@ -52,7 +52,7 @@ public class UppidyBrowseActivity extends AbstractAsyncListActivity {
 		}
 
 		@Override
-		protected List<Message> doInBackground(Void... params) {
+		protected List<ApiMessage> doInBackground(Void... params) {
 			try {
 				return uppidy.backupOperations().listMessages(getApplicationContext().getContainerId(), null);
 			} catch (Exception e) {
@@ -62,7 +62,7 @@ public class UppidyBrowseActivity extends AbstractAsyncListActivity {
 		}
 
 		@Override
-		protected void onPostExecute(List<Message> entries) {
+		protected void onPostExecute(List<ApiMessage> entries) {
 			dismissProgressDialog();
 			showResult(entries);
 		}

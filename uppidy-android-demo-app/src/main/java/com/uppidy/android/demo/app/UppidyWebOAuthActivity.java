@@ -25,9 +25,9 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.uppidy.android.sdk.R;
-import com.uppidy.android.sdk.social.api.Uppidy;
-import com.uppidy.android.sdk.social.connect.UppidyConnectionFactory;
-import com.uppidy.android.sdk.social.api.Container;
+import com.uppidy.android.sdk.api.ApiContainer;
+import com.uppidy.android.sdk.api.Uppidy;
+import com.uppidy.android.sdk.connect.UppidyConnectionFactory;
 
 /**
  * @author arudnev@uppidy.com
@@ -213,8 +213,8 @@ public class UppidyWebOAuthActivity extends AbstractWebViewActivity {
 					queryParams.put("number", phoneNumber);
 				}
 			}
-			Container container = null;
-			List<Container> containers = uppidy.backupOperations().listContainers(queryParams);
+			ApiContainer container = null;
+			List<ApiContainer> containers = uppidy.backupOperations().listContainers(queryParams);
 			if(containers.isEmpty()) {
 				Map<String, Object> parameters = new HashMap<String, Object>();
 				if(phoneNumber != null) parameters.put("number", phoneNumber);

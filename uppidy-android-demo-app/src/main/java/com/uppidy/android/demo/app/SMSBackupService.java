@@ -16,12 +16,12 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.PhoneLookup;
 
+import com.uppidy.android.sdk.api.ApiContact;
+import com.uppidy.android.sdk.api.ApiContactInfo;
+import com.uppidy.android.sdk.api.ApiMessage;
+import com.uppidy.android.sdk.api.Uppidy;
 import com.uppidy.android.sdk.backup.BackupService;
 import com.uppidy.android.sdk.backup.MessageProvider;
-import com.uppidy.android.sdk.social.api.Contact;
-import com.uppidy.android.sdk.social.api.ContactInfo;
-import com.uppidy.android.sdk.social.api.Message;
-import com.uppidy.android.sdk.social.api.Uppidy;
 
 public class SMSBackupService extends BackupService
 {	
@@ -81,11 +81,11 @@ public class SMSBackupService extends BackupService
 		}
 		
 		@Override
-		public void backupDone( List<Message> messages )
+		public void backupDone( List<ApiMessage> messages )
 		{
 			//if this backup batch was successful - no need to reload the dates on the next turn
 			needReloadDates = false;
-			for( Message m : messages )
+			for( ApiMessage m : messages )
 			{
 				if( firstSyncDate == null || firstSyncDate.after(m.getSentTime()) ) 
 				{
@@ -99,9 +99,9 @@ public class SMSBackupService extends BackupService
 		}
 
 		@Override
-		public List<Contact> getContacts( List<String> contactIds )
+		public List<ApiContact> getContacts( List<String> contactIds )
 		{
-			List<Contact> contacts = new ArrayList<Contact>();
+			List<ApiContact> contacts = new ArrayList<ApiContact>();
 			for( String id : contactIds ) contacts.add( getContactFromNumber(id) );
 			return contacts;
 		}
@@ -113,7 +113,7 @@ public class SMSBackupService extends BackupService
 		}
 
 		@Override
-		public List<Message> getNextSyncBundle()
+		public List<ApiMessage> getNextSyncBundle()
 		{
 			if( needReloadDates ) 
 			{
@@ -121,7 +121,7 @@ public class SMSBackupService extends BackupService
 				firstSyncDate = uppidy.backupOperations().getFirstMessageSyncDate( getContainerId() );
 				lastSyncDate  = uppidy.backupOperations().getLastMessageSyncDate( getContainerId() );
 			}
-			List<Message> messages = getMessages( lastSyncDate, MAX_SMS );
+			List<ApiMessage> messages = getMessages( lastSyncDate, MAX_SMS );
 			// if we have some SMS for backup, let's assume this backup session is going to fail 
 			// until otherwise said explicitly by BackupService via backupDone method call.
 			// If it fails - we have to reload the dates because some of the messages may be backed up
@@ -130,9 +130,9 @@ public class SMSBackupService extends BackupService
 			return messages;
 		}
 		
-		private List<Message> getMessages( Date from, int num )
+		private List<ApiMessage> getMessages( Date from, int num )
 		{
-			List<Message> messages = new ArrayList<Message>();
+			List<ApiMessage> messages = new ArrayList<ApiMessage>();
 			
 			Cursor cursor = null;
 			if( from == null )
@@ -149,7 +149,7 @@ public class SMSBackupService extends BackupService
 			
 			cursor.moveToFirst();
 			int size = cursor.getCount();
-			ContactInfo me = context.getContainer().getOwner();
+			ApiContactInfo me = context.getContainer().getOwner();
 			for( int i = 0; i < num && i < size; i++, cursor.moveToNext() )
 			{
 				String mID = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
@@ -157,9 +157,9 @@ public class SMSBackupService extends BackupService
 				String smsBody = cursor.getString(cursor.getColumnIndexOrThrow("body"));
 				Long smsDate = cursor.getLong(cursor.getColumnIndexOrThrow("date"));
 				int type = cursor.getInt(cursor.getColumnIndexOrThrow("type"));
-				Message m = new Message();
+				ApiMessage m = new ApiMessage();
 				m.setId( mID );
-				ContactInfo other = new ContactInfo();
+				ApiContactInfo other = new ApiContactInfo();
 				other.setAddress(smsAddress);
 				switch( type )
 				{
@@ -183,10 +183,10 @@ public class SMSBackupService extends BackupService
 			return messages;
 		}
 		
-		private Contact getContactFromNumber(String phoneNumber) 
+		private ApiContact getContactFromNumber(String phoneNumber) 
 		{
 			if (phoneNumber == null ) return null; 
-			Contact contact = new Contact();
+			ApiContact contact = new ApiContact();
 			// temp variables to hold the contact information
 			String name = phoneNumber;
 			String number = phoneNumber;

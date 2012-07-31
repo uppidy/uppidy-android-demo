@@ -9,17 +9,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.uppidy.android.sdk.social.api.ContactInfo;
-import com.uppidy.android.sdk.social.api.Message;
+import com.uppidy.android.sdk.api.ApiContactInfo;
+import com.uppidy.android.sdk.api.ApiMessage;
 
 /**
  * @author arudnev@uppidy.com
  */
 public class UppidyFeedListAdapter extends BaseAdapter {
-    private List<Message> entries;
+    private List<ApiMessage> entries;
     private final LayoutInflater layoutInflater;
 
-    public UppidyFeedListAdapter(Context context, List<Message> entries) {
+    public UppidyFeedListAdapter(Context context, List<ApiMessage> entries) {
         this.entries = entries;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -28,7 +28,7 @@ public class UppidyFeedListAdapter extends BaseAdapter {
         return entries == null ? 0 : entries.size();
     }
 
-    public Message getItem(int position) {
+    public ApiMessage getItem(int position) {
         return entries.get(position);
     }
 
@@ -36,16 +36,16 @@ public class UppidyFeedListAdapter extends BaseAdapter {
         return position;
     }
     
-    private String toString(ContactInfo ref) {
+    private String toString(ApiContactInfo ref) {
     	if(ref == null) return null;
     	return ref.toString();
     }
     
-    private String toString(List<ContactInfo> refs) {
+    private String toString(List<ApiContactInfo> refs) {
     	String sep = "";
     	StringBuffer result = new StringBuffer();
     	result.append("[");
-    	for(ContactInfo ref : refs) {
+    	for(ApiContactInfo ref : refs) {
     		result.append(sep);
     		result.append(ref);
     		sep = ", ";
@@ -55,7 +55,7 @@ public class UppidyFeedListAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        Message entry = getItem(position);
+        ApiMessage entry = getItem(position);
         View view = convertView;
 
         if (view == null) {

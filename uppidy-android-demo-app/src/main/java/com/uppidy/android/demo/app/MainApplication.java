@@ -11,9 +11,9 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.uppidy.android.sdk.R;
-import com.uppidy.android.sdk.social.api.Uppidy;
-import com.uppidy.android.sdk.social.connect.UppidyConnectionFactory;
-import com.uppidy.android.sdk.social.api.Container;
+import com.uppidy.android.sdk.api.ApiContainer;
+import com.uppidy.android.sdk.api.Uppidy;
+import com.uppidy.android.sdk.connect.UppidyConnectionFactory;
 
 /**
  * @author arudnev@uppidy.com
@@ -22,7 +22,7 @@ public class MainApplication extends Application {
 	private ConnectionFactoryRegistry connectionFactoryRegistry;
 	private SQLiteOpenHelper repositoryHelper;
 	private ConnectionRepository connectionRepository;
-	private Container container;
+	private ApiContainer container;
 
 	// ***************************************
 	// Application Methods
@@ -69,11 +69,11 @@ public class MainApplication extends Application {
 		return getSharedPreferences("UppidyDemoSettings", MODE_PRIVATE);		
 	}
 	
-	public Container getContainer() {
+	public ApiContainer getContainer() {
 		return this.container;
 	}
 	
-	public void setContainer(Container container) {
+	public void setContainer(ApiContainer container) {
 		this.container = container;
 	}
 	

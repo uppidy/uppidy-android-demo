@@ -11,8 +11,8 @@ import android.widget.ListView;
 
 import com.uppidy.android.sdk.R;
 import com.uppidy.android.sdk.backup.BackupService;
-import com.uppidy.android.sdk.social.api.Uppidy;
-import com.uppidy.android.sdk.social.connect.UppidyConnectionFactory;
+import com.uppidy.android.sdk.api.Uppidy;
+import com.uppidy.android.sdk.connect.UppidyConnectionFactory;
 
 /**
  * @author arudnev@uppidy.com
