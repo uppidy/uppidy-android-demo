@@ -1,17 +1,28 @@
 package com.uppidy.android.demo.app;
 
+import java.util.Collections;
+import java.util.Date;
+
 import org.springframework.social.connect.ConnectionRepository;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.uppidy.android.sdk.R;
-import com.uppidy.android.sdk.backup.BackupService;
+import com.uppidy.android.sdk.api.ApiContact;
+import com.uppidy.android.sdk.api.ApiContactInfo;
+import com.uppidy.android.sdk.api.ApiContainer;
+import com.uppidy.android.sdk.api.ApiMessage;
+import com.uppidy.android.sdk.api.ApiSync;
 import com.uppidy.android.sdk.api.Uppidy;
+import com.uppidy.android.sdk.backup.BackupService;
 import com.uppidy.android.sdk.connect.UppidyConnectionFactory;
 
 /**
@@ -82,7 +93,7 @@ public class UppidyActivity extends AbstractAsyncActivity {
 	}
 
 	private void showUppidyOptions() {
-		String[] options = { "Disconnect", "Browse", "Sync" };
+		String[] options = { "Disconnect", "Fake Sync", "Full Load", "Start Backup Service", "Stop Backup Service" };
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);
 		ListView listView = (ListView) this.findViewById(R.id.uppidy_activity_options_list);
 		listView.setAdapter(arrayAdapter);
@@ -108,12 +119,18 @@ public class UppidyActivity extends AbstractAsyncActivity {
 					showConnectOption();
 					break;
 				case 1:
+					new FakeSyncTask().execute();
+					break;
+				case 2:
 					intent = new Intent();
 					intent.setClass(parentView.getContext(), UppidyBrowseActivity.class);
 					startActivity(intent);
 					break;
-				case 2:
+				case 3:
 					startService(new Intent(BackupService.ACTION_START));
+					break;
+				case 4:
+					startService(new Intent(BackupService.ACTION_STOP));
 					break;
 				default:
 					break;
@@ -128,5 +145,75 @@ public class UppidyActivity extends AbstractAsyncActivity {
 		startActivity(intent);
 		finish();
 	}
+	
+	private void showResult(String result) {
+		Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+	}
+	
+	// ***************************************
+	// Private classes
+	// ***************************************
+	private class FakeSyncTask extends AsyncTask<Void, Void, String> {
+
+		@Override
+		protected void onPreExecute() {
+			showProgressDialog("Fetching feed...");
+		}
+
+		@Override
+		protected String doInBackground(Void... params) {
+			try {
+				Uppidy uppidy = getApplicationContext().getConnectionRepository().findPrimaryConnection(Uppidy.class).getApi();
+				
+				String containerId = getApplicationContext().getContainerId();
+				ApiContainer container = getApplicationContext().getContainer();
+				
+				if(container == null) return "Container is not initialized";
+				
+				Log.d(TAG, "Container for sync: " + container);
+				
+				ApiContactInfo myInfo = container.getOwner();
+				
+				ApiSync sync = new ApiSync();
+				sync.setClientVersion("12.07");
+
+				ApiContactInfo contactInfo = new ApiContactInfo();
+				contactInfo.setName("Uppidy User");
+				contactInfo.setAddress("8181868174");
+
+				ApiMessage message = new ApiMessage();
+				message.setSentTime(new Date());
+				message.setSent(Math.random() > 0.5);				
+				message.setFrom(message.isSent() ? myInfo : contactInfo);
+				message.setTo(Collections.singletonList(message.isSent() ? contactInfo : myInfo));
+				message.setText("Fake message generated at " + message.getSentTime());
+				
+				sync.setMessages(Collections.singletonList(message));
+				
+				ApiContact contact = new ApiContact();
+				contact.setName(contactInfo.getName());
+				contact.setAddressByType(Collections.singletonMap("phone", Collections.singletonList(contactInfo.getAddress())));
+				
+				sync.setContacts(Collections.singletonList(contact));
+
+				uppidy.backupOperations().sync(containerId, sync);
+				
+				
+				return "The following sync is done: " + sync;
+
+			} catch (Exception e) {
+				Log.e(TAG, e.getLocalizedMessage(), e);
+			
+				return "Error happened during fake sync: " + e.getLocalizedMessage();
+			}
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			dismissProgressDialog();
+			showResult(result);
+		}
+	}
+
 
 }
