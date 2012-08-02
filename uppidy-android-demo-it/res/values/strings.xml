@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <string name="app_name">Uppidy Android SDK</string>
-    <string name="app_description">Uppidy example using Spring Social</string>
+    <string name="app_name">Uppidy Android Demo</string>
+    <string name="app_description">Uppidy API via Spring Social</string>
 </resources>

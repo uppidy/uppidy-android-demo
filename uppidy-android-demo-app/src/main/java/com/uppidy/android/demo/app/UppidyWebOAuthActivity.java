@@ -202,13 +202,13 @@ public class UppidyWebOAuthActivity extends AbstractWebViewActivity {
 			} else {
 				// Returns the phone number string for line 1, for example, the MSISDN for a GSM phone. 
 				// Return null if it is unavailable.
+				// TODO (AR): apparently it returns empty string if number is not available
 				phoneNumber = ((TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number();
-				if (phoneNumber == null) {
+				if (phoneNumber == null || phoneNumber.length() == 0) {
 					// Returns the unique device ID, for example, the IMEI for GSM and the MEID or ESN for CDMA phones. 
 					// Return null if device ID is not available. 
 					deviceId = ((TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-					queryParams.put("deviceId", deviceId);
-					
+					queryParams.put("deviceId", deviceId);					
 				} else {
 					queryParams.put("number", phoneNumber);
 				}
@@ -217,8 +217,8 @@ public class UppidyWebOAuthActivity extends AbstractWebViewActivity {
 			List<ApiContainer> containers = uppidy.backupOperations().listContainers(queryParams);
 			if(containers.isEmpty()) {
 				Map<String, Object> parameters = new HashMap<String, Object>();
-				if(phoneNumber != null) parameters.put("number", phoneNumber);
-				if(deviceId != null) parameters.put("deviceId", deviceId);
+				if(phoneNumber != null && phoneNumber.length() > 0) parameters.put("number", phoneNumber);
+				if(deviceId != null && deviceId.length() > 0) parameters.put("deviceId", deviceId);
 				parameters.put("description", Build.MODEL);
 				container = uppidy.backupOperations().createContainer(parameters);
 			} else {
