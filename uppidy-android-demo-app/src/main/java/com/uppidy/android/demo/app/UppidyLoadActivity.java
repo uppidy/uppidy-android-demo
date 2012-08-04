@@ -1,6 +1,5 @@
 package com.uppidy.android.demo.app;
 
-import java.util.Date;
 import java.util.List;
 
 import android.os.AsyncTask;
@@ -13,9 +12,9 @@ import com.uppidy.android.sdk.api.Uppidy;
 /**
  * @author arudnev@uppidy.com
  */
-public class UppidyBrowseActivity extends AbstractAsyncListActivity {
+public class UppidyLoadActivity extends AbstractAsyncListActivity {
 
-	protected static final String TAG = UppidyBrowseActivity.class.getSimpleName();
+	protected static final String TAG = UppidyLoadActivity.class.getSimpleName();
 
 	private Uppidy uppidy;
 
@@ -54,8 +53,8 @@ public class UppidyBrowseActivity extends AbstractAsyncListActivity {
 
 		@Override
 		protected List<ApiMessage> doInBackground(Void... params) {
-			try {				
-				return uppidy.feedOperations().searchFeed("account", "me", "fake", 0, 100, new Date(0), new Date());
+			try {
+				return uppidy.backupOperations().listMessages(getApplicationContext().getContainerId(), null);
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
 			}
