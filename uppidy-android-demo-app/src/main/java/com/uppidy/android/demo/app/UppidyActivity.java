@@ -23,7 +23,6 @@ import com.uppidy.android.sdk.api.ApiContainer;
 import com.uppidy.android.sdk.api.ApiMessage;
 import com.uppidy.android.sdk.api.ApiSync;
 import com.uppidy.android.sdk.api.Uppidy;
-import com.uppidy.android.sdk.backup.BackupService;
 import com.uppidy.android.sdk.connect.UppidyConnectionFactory;
 
 /**
@@ -116,7 +115,7 @@ public class UppidyActivity extends AbstractAsyncActivity {
 					startActivity(intent);
 					break;
 				case 3:
-					startService(new Intent(BackupService.ACTION_BACKUP_ALL));
+					SMSBackupService.start(parentView.getContext());
 					break;
 				case 4:
 					intent = new Intent();

@@ -10,6 +10,8 @@ import java.util.Map;
 
 import org.springframework.social.connect.ConnectionRepository;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -40,6 +42,8 @@ public class SMSBackupService extends BackupService
 	public  static final int      SMS_TYPE_SENT = 2;
 	private static final int      MAX_SMS = 10;
 	
+	private static boolean        enabled = false;
+	
 	public SMSBackupService()
 	{
 		super( "SMS Backup" );
@@ -58,6 +62,22 @@ public class SMSBackupService extends BackupService
 		return ((MainApplication)getApplicationContext()).getConnectionRepository();
 	}
 	
+	@Override
+	protected boolean isEnabled()
+	{
+		return enabled;
+	}
+	
+	public static void start( Context context )
+	{
+		enabled = true;
+		context.startService( new Intent(BackupService.ACTION_BACKUP_ALL) );
+	}
+	
+	public static void stop()
+	{
+		enabled = false;
+	}
 	// ***************************************
 	// Private classes
 	// ***************************************
