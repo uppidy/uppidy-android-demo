@@ -93,23 +93,11 @@ public class UppidyActivity extends AbstractAsyncActivity {
 	}
 
 	private void showUppidyOptions() {
-		String[] options = { "Disconnect", "Fake Sync", "Full Load", "Start Backup Service", "Stop Backup Service" };
+		String[] options = { "Disconnect", "Fake Backup", "Load From Backup", "Run SMS Backup", "Browse" };
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);
 		ListView listView = (ListView) this.findViewById(R.id.uppidy_activity_options_list);
 		listView.setAdapter(arrayAdapter);
 
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
-				switch (position) {
-				case 0:
-					disconnect();
-					showConnectOption();
-					break;
-				default:
-					break;
-				}
-			}
-		});
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
 				Intent intent;
@@ -123,14 +111,16 @@ public class UppidyActivity extends AbstractAsyncActivity {
 					break;
 				case 2:
 					intent = new Intent();
-					intent.setClass(parentView.getContext(), UppidyBrowseActivity.class);
+					intent.setClass(parentView.getContext(), UppidyLoadActivity.class);
 					startActivity(intent);
 					break;
 				case 3:
-					SMSBackupService.start(parentView.getContext()) ;
+					SMSBackupService.start(parentView.getContext());
 					break;
 				case 4:
-					SMSBackupService.stop();
+					intent = new Intent();
+					intent.setClass(parentView.getContext(), UppidyBrowseActivity.class);
+					startActivity(intent);
 					break;
 				default:
 					break;
@@ -157,7 +147,7 @@ public class UppidyActivity extends AbstractAsyncActivity {
 
 		@Override
 		protected void onPreExecute() {
-			showProgressDialog("Fetching feed...");
+			showProgressDialog("Backing up a message...");
 		}
 
 		@Override

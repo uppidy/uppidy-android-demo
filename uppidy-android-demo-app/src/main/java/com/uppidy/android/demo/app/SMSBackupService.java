@@ -12,7 +12,6 @@ import org.springframework.social.connect.ConnectionRepository;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;

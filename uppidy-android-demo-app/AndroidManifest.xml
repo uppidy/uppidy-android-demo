@@ -32,7 +32,7 @@
             android:excludeFromRecents="true"
             android:noHistory="true" />
         <activity android:name=".UppidyBrowseActivity" />
-        <activity android:name=".UppidySyncActivity" />
+        <activity android:name=".UppidyLoadActivity" />
 
         <service android:name=".SMSBackupService" >
             <intent-filter>
