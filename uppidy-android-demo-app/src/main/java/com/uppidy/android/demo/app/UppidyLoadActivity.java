@@ -48,7 +48,7 @@ public class UppidyLoadActivity extends AbstractAsyncListActivity {
 
 		@Override
 		protected void onPreExecute() {
-			showProgressDialog("Fetching feed...");
+			showProgressDialog("Loading backed up data...");
 		}
 
 		@Override

@@ -147,7 +147,7 @@ public class UppidyActivity extends AbstractAsyncActivity {
 
 		@Override
 		protected void onPreExecute() {
-			showProgressDialog("Fetching feed...");
+			showProgressDialog("Backing up a message...");
 		}
 
 		@Override
