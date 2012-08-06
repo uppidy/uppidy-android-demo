@@ -43,12 +43,11 @@ public class SMSBackupService extends BackupService
 	public  static final int      SMS_TYPE_SENT = 2;
 	private static final int      MAX_SMS = 10;
 	
-	private static boolean        enabled;
+	private static boolean        enabled = false;
 	
 	public SMSBackupService()
 	{
 		super( "SMS Backup" );
-		enabled = false;
 	}
 
 	@Override
