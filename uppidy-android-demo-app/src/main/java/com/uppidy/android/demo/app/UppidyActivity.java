@@ -2,6 +2,7 @@ package com.uppidy.android.demo.app;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.social.connect.ConnectionRepository;
 
@@ -115,7 +116,7 @@ public class UppidyActivity extends AbstractAsyncActivity {
 					startActivity(intent);
 					break;
 				case 3:
-					startService(new Intent(BackupService.ACTION_START));
+					startService(new Intent(BackupService.ACTION_BACKUP_ALL));
 					break;
 				case 4:
 					intent = new Intent();
@@ -158,7 +159,15 @@ public class UppidyActivity extends AbstractAsyncActivity {
 				String containerId = getApplicationContext().getContainerId();
 				ApiContainer container = getApplicationContext().getContainer();
 				
-				if(container == null) return "Container is not initialized";
+				if(container == null && containerId != null) {
+					List<ApiContainer> containers = uppidy.backupOperations().listContainers(Collections.singletonMap("id", containerId));
+					if(!containers.isEmpty()) {
+						container = containers.get(0);
+					}
+				}
+				if(container == null) {
+					return "Container is not initialized";
+				}
 				
 				Log.d(TAG, "Container for sync: " + container);
 				

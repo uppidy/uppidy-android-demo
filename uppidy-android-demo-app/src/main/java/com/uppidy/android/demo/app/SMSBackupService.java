@@ -10,7 +10,6 @@ import java.util.Map;
 
 import org.springframework.social.connect.ConnectionRepository;
 
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -57,12 +56,6 @@ public class SMSBackupService extends BackupService
 	protected ConnectionRepository getUppidyConnectionRepository()
 	{
 		return ((MainApplication)getApplicationContext()).getConnectionRepository();
-	}
-	
-	@Override
-	protected SharedPreferences getSharedPreferences()
-	{
-		return ((MainApplication)getApplicationContext()).getSettings();
 	}
 	
 	// ***************************************
