@@ -10,6 +10,8 @@ import java.util.Map;
 
 import org.springframework.social.connect.ConnectionRepository;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -41,9 +43,12 @@ public class SMSBackupService extends BackupService
 	public  static final int      SMS_TYPE_SENT = 2;
 	private static final int      MAX_SMS = 10;
 	
+	private static boolean        enabled;
+	
 	public SMSBackupService()
 	{
 		super( "SMS Backup" );
+		enabled = false;
 	}
 
 	@Override
@@ -60,11 +65,21 @@ public class SMSBackupService extends BackupService
 	}
 	
 	@Override
-	protected SharedPreferences getSharedPreferences()
+	protected boolean isEnabled()
 	{
-		return ((MainApplication)getApplicationContext()).getSettings();
+		return enabled;
 	}
 	
+	public static void start( Context context )
+	{
+		enabled = true;
+		context.startService( new Intent(BackupService.ACTION_BACKUP_ALL) );
+	}
+	
+	public static void stop()
+	{
+		enabled = false;
+	}
 	// ***************************************
 	// Private classes
 	// ***************************************

@@ -127,10 +127,10 @@ public class UppidyActivity extends AbstractAsyncActivity {
 					startActivity(intent);
 					break;
 				case 3:
-					startService(new Intent(BackupService.ACTION_START));
+					SMSBackupService.start(parentView.getContext()) ;
 					break;
 				case 4:
-					startService(new Intent(BackupService.ACTION_STOP));
+					SMSBackupService.stop();
 					break;
 				default:
 					break;
