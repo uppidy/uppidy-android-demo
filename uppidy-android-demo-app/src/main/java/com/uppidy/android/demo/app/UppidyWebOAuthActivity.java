@@ -107,10 +107,10 @@ public class UppidyWebOAuthActivity extends AbstractWebViewActivity {
 			Log.d(TAG, url);
 
 			/*
-			 * The access token is returned in the URI fragment of the URL. See the Desktop Apps section all the way 
-			 * at the bottom of this link:
+			 * The access token is returned in the URI fragment of the URL. 
+			 * See details of authentication / authorization support via the following link:
 			 * 
-			 * http://developers.uppidy.com/docs/authentication/
+			 * http://develop.uppidy.com/docs/auth/
 			 * 
 			 * The fragment will be formatted like this:
 			 * 
@@ -129,7 +129,7 @@ public class UppidyWebOAuthActivity extends AbstractWebViewActivity {
 			 * 
 			 * The error query string will look like this:
 			 * 
-			 * ?error_reason=user_denied&error=access_denied&error_description=The +user+denied+your+request
+			 * ?error_reason=user_denied&error=access_denied&error_description=The+user+denied+your+request
 			 */
 			if (uri.getQueryParameter("error") != null) {
 				CharSequence errorReason = uri.getQueryParameter("error_description").replace("+", " ");

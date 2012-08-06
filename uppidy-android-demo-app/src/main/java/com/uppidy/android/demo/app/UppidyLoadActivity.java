@@ -30,7 +30,7 @@ public class UppidyLoadActivity extends AbstractAsyncListActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		new FetchFeedTask().execute();
+		new LoadTask().execute();
 	}
 
 	// ***************************************
@@ -44,7 +44,7 @@ public class UppidyLoadActivity extends AbstractAsyncListActivity {
 	// ***************************************
 	// Private classes
 	// ***************************************
-	private class FetchFeedTask extends AsyncTask<Void, Void, List<ApiMessage>> {
+	private class LoadTask extends AsyncTask<Void, Void, List<ApiMessage>> {
 
 		@Override
 		protected void onPreExecute() {

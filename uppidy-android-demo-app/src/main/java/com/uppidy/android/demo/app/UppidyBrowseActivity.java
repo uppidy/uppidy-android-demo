@@ -49,7 +49,7 @@ public class UppidyBrowseActivity extends AbstractAsyncListActivity {
 
 		@Override
 		protected void onPreExecute() {
-			showProgressDialog("Fetching feed...");
+			showProgressDialog("Searching for 'fake' messages...");
 		}
 
 		@Override
