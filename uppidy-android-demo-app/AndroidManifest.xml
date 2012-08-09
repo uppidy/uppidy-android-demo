@@ -36,8 +36,7 @@
 
         <service android:name=".SMSBackupService" >
             <intent-filter>
-                <action android:name="com.uppidy.android.sdk.backup.START" />
-                <action android:name="com.uppidy.android.sdk.backup.STOP" />
+                <action android:name="com.uppidy.android.sdk.backup.BACKUP_ALL" />
                 <action android:name="com.uppidy.android.demo.SMS_BACKUP" />
             </intent-filter>
         </service>
