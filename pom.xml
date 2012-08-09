@@ -9,7 +9,7 @@
 	<packaging>pom</packaging>
 	<name>com.uppidy.andoroid.demo</name>
 	<description>Uppidy Android Demo</description>
-	<url>https://develop.uppidy.com/public/docs/uppidy-android-samples</url>
+	<url>https://develop.uppidy.com/public/docs/uppidy-android-demo</url>
 	<scm>
 		<connection>scm:git:ssh://git@github.com/uppidy/uppidy-android-demo.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/uppidy/uppidy-android-demo.git</developerConnection>
