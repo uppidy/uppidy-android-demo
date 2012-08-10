@@ -11,8 +11,8 @@
 	<body>
 		<menu name="Overview">
 			<item name="Introduction" href="index.html" />
+			<item name="Modules" href="modules.html" />
 		</menu>
-		<menu ref="modules"/>
 		<menu ref="reports" />
 	</body>
 </project>

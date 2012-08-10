@@ -8,7 +8,7 @@
 
 Uppidy Android Demo
 
- {{{https://github.com/uppidy/uppidy-android-demo}Uppidy Android Demo}} contains a {{{uppidy-android-demo-app}demo app}} and {{{uppidy-android-demo-it}instrumentation tests}} to demonstrate functionality of {{{https://github.com/uppidy/uppidy-android-sdk}Uppidy Android SDK}}.
+ {{{https://github.com/uppidy/uppidy-android-demo}Uppidy Android Demo}} contains a {{{./uppidy-android-demo-app}Demo App}} and {{{./uppidy-android-demo-it}Instrumentation Tests}} to demonstrate functionality of {{{https://github.com/uppidy/uppidy-android-sdk}Uppidy Android SDK}}.
  
  Please review {{{http://develop.uppidy.com/public/docs/uppidy-android-sdk}Uppidy Android SDK Docs}} first.
 
