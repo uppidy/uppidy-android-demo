@@ -9,7 +9,7 @@
 	<packaging>pom</packaging>
 	<name>com.uppidy.andoroid.demo</name>
 	<description>Uppidy Android Demo</description>
-	<url>https://develop.uppidy.com/public/docs/uppidy-android-demo</url>
+	<url>http://develop.uppidy.com/public/docs/uppidy-android-demo</url>
 	<scm>
 		<connection>scm:git:ssh://git@github.com/uppidy/uppidy-android-demo.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/uppidy/uppidy-android-demo.git</developerConnection>
@@ -87,11 +87,8 @@
 		<junit-version>4.10</junit-version>
 		<org.springframework.android-version>1.0.0.RELEASE</org.springframework.android-version>
 		<org.springframework.social-version>1.0.2.RELEASE</org.springframework.social-version>
-		<org.springframework.social-facebook-version>1.0.1.RELEASE</org.springframework.social-facebook-version>
 		<org.springframework.security-version>3.1.0.RELEASE</org.springframework.security-version>
 		<org.codehaus.jackson-version>1.9.7</org.codehaus.jackson-version>
-		<com.google.code.gson-version>2.2</com.google.code.gson-version>
-		<org.simpleframework-version>2.6.2</org.simpleframework-version>
 	</properties>
 
 	<dependencyManagement>
@@ -175,64 +172,11 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>org.springframework.social</groupId>
-				<artifactId>spring-social-twitter</artifactId>
-				<version>${org.springframework.social-version}</version>
-				<exclusions>
-					<!-- Provided by Android -->
-					<exclusion>
-						<artifactId>commons-logging</artifactId>
-						<groupId>commons-logging</groupId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.social</groupId>
-				<artifactId>spring-social-facebook</artifactId>
-				<version>${org.springframework.social-facebook-version}</version>
-				<exclusions>
-					<!-- Provided by Android -->
-					<exclusion>
-						<artifactId>commons-logging</artifactId>
-						<groupId>commons-logging</groupId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
 				<!-- Using Jackson for JSON marshaling -->
 				<groupId>org.codehaus.jackson</groupId>
 				<artifactId>jackson-mapper-asl</artifactId>
 				<version>${org.codehaus.jackson-version}</version>
 			</dependency>
-			<dependency>
-				<!-- Using Gson for JSON marshaling -->
-				<groupId>com.google.code.gson</groupId>
-				<artifactId>gson</artifactId>
-				<version>${com.google.code.gson-version}</version>
-			</dependency>
-			<dependency>
-				<!-- Using Simple for XML marshaling -->
-				<groupId>org.simpleframework</groupId>
-				<artifactId>simple-xml</artifactId>
-				<version>${org.simpleframework-version}</version>
-				<exclusions>
-					<!-- StAX is not available on Android -->
-					<exclusion>
-						<artifactId>stax</artifactId>
-						<groupId>stax</groupId>
-					</exclusion>
-					<exclusion>
-						<artifactId>stax-api</artifactId>
-						<groupId>stax</groupId>
-					</exclusion>
-					<!-- Provided by Android -->
-					<exclusion>
-						<artifactId>xpp3</artifactId>
-						<groupId>xpp3</groupId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 
