@@ -1,0 +1,11 @@
+ ------
+ Introduction
+ ------
+ Alex Rudnev
+ ------
+ 2012-08-10
+ ------
+
+Uppidy Android Demo Instrumentation Tests
+
+ At this time this module is just a placeholder for instrumentation tests for {{{../../uppidy-android-demo-app}demo app}}.

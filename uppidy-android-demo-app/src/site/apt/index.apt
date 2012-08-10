@@ -1,0 +1,22 @@
+ ------
+ Introduction
+ ------
+ Alex Rudnev
+ ------
+ 2012-08-10
+ ------
+
+Uppidy Android Demo App
+
+ This module contains a demo app to show how to use {{{https://github.com/uppidy/uppidy-android-sdk}Uppidy Android SDK}}.
+ 
+ The following examples demonstrate some of the main features of the {{{http://develop.uppidy.com}Uppidy Web Services API}}:
+
+  * {{{./xref/com/uppidy/android/demo/app/UppidyWebOAuthActivity.html}OAuth and find / create a container}}
+  
+  * {{{./xref/com/uppidy/android/demo/app/UppidyActivity.html}Backup to a container}}
+  
+  * {{{./xref/com/uppidy/android/demo/app/UppidyLoadActivity.html}Load from a container}}
+  
+  * {{{./xref/com/uppidy/android/demo/app/UppidyBrowseActivity.html}Search across all personal containers}}
+  

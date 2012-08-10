@@ -8,17 +8,7 @@
 
 Uppidy Android Demo
 
- {{{https://github.com/uppidy/uppidy-android-demo}Uppidy Android Demo}} contains a demo app and instrumentation tests to demonstrate functionality of {{{https://github.com/uppidy/uppidy-android-sdk}Uppidy Android SDK}}.
+ {{{https://github.com/uppidy/uppidy-android-demo}Uppidy Android Demo}} contains a {{{uppidy-android-demo-app}demo app}} and {{{uppidy-android-demo-it}instrumentation tests}} to demonstrate functionality of {{{https://github.com/uppidy/uppidy-android-sdk}Uppidy Android SDK}}.
  
- * Examples
-
-   The following examples demonstrate some of the main features of the {{{http://develop.uppidy.com}API}}:
-
-   * {{{./xref/com/uppidy/android/demo/app/UppidyWebOAuthActivity.html}OAuth and find / create a container}}
-   
-   * {{{./xref/com/uppidy/android/demo/app/UppidyActivity.html}Backup to a container}}
-
-   * {{{./xref/com/uppidy/android/demo/app/UppidyLoadActivity.html}Load from a container}}
-   
-   * {{{./xref/com/uppidy/android/demo/app/UppidyBrowseActivity.html}Search across all personal containers}}
+ Please review {{{http://develop.uppidy.com/public/docs/uppidy-android-sdk}Uppidy Android SDK Docs}} first.
 
