@@ -31,7 +31,7 @@ public class MainApplication extends Application {
 	public void onCreate() {
 		// create a new ConnectionFactoryLocator and populate it with Uppidy ConnectionFactory
 		this.connectionFactoryRegistry = new ConnectionFactoryRegistry();
-		this.connectionFactoryRegistry.addConnectionFactory(new UppidyConnectionFactory(getUppidyAppId(), getUppidyAppSecret(), getBaseUrl()));
+		this.connectionFactoryRegistry.addConnectionFactory(new UppidyConnectionFactory(getUppidyAppId(), getBaseUrl()));
 
 		// set up the database and encryption
 		this.repositoryHelper = new SQLiteConnectionRepositoryHelper(this);
@@ -46,10 +46,6 @@ public class MainApplication extends Application {
 		return getString(R.string.uppidy_app_id);
 	}
 
-	private String getUppidyAppSecret() {
-		return getString(R.string.uppidy_app_secret);
-	}
-	
 	private String getBaseUrl() {
 		return getString(R.string.uppidy_base_url);
 	}
