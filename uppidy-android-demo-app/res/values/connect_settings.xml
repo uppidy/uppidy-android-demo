@@ -3,5 +3,5 @@
     <string name="uppidy_app_id">uppidy-demo</string>
     <string name="uppidy_base_url">https://lab.uppidy.com</string>
     <string name="uppidy_oauth_callback_url">https://lab.uppidy.com/oauth/ui/dashboard</string>
-    <string name="uppidy_scope">"read,write"</string>
+    <string name="uppidy_scope">read,write</string>
 </resources>
