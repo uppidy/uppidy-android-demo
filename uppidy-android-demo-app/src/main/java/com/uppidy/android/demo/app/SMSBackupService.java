@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import android.provider.ContactsContract.PhoneLookup;
 import com.uppidy.android.sdk.api.ApiContact;
 import com.uppidy.android.sdk.api.ApiContactInfo;
 import com.uppidy.android.sdk.api.ApiMessage;
+import com.uppidy.android.sdk.api.ApiSync;
 import com.uppidy.android.sdk.api.Uppidy;
 import com.uppidy.android.sdk.backup.BackupService;
 import com.uppidy.android.sdk.backup.MessageProvider;
@@ -94,11 +96,11 @@ public class SMSBackupService extends BackupService
 		}
 		
 		@Override
-		public void backupDone( List<ApiMessage> messages )
+		public void backupDone( ApiSync sync )
 		{
 			//if this backup batch was successful - no need to reload the dates on the next turn
 			needReloadDates = false;
-			for( ApiMessage m : messages )
+			for( ApiMessage m : sync.getMessages() )
 			{
 				if( firstSyncDate == null || firstSyncDate.after(m.getSentTime()) ) 
 				{
@@ -111,11 +113,19 @@ public class SMSBackupService extends BackupService
 			}
 		}
 
-		@Override
-		public List<ApiContact> getContacts( List<String> contactIds )
+		private List<ApiContact> getContactsFromMessages( List<ApiMessage> messages )
 		{
-			List<ApiContact> contacts = new ArrayList<ApiContact>();
-			for( String id : contactIds ) contacts.add( getContactFromNumber(id) );
+			ArrayList<ApiContact> contacts = new ArrayList<ApiContact>();
+			HashSet<String> addresses = new HashSet<String>();
+			
+			for( ApiMessage m : messages )
+			{
+				addresses.add(m.getFrom().getAddress());
+				for( ApiContactInfo ref : m.getTo() ) addresses.add( ref.getAddress() );
+			}
+
+			for( String id : addresses ) contacts.add(getContactFromNumber(id));
+			
 			return contacts;
 		}
 
@@ -126,7 +136,7 @@ public class SMSBackupService extends BackupService
 		}
 
 		@Override
-		public List<ApiMessage> getNextSyncBundle()
+		public ApiSync getNextSyncBundle()
 		{
 			if( needReloadDates ) 
 			{
@@ -140,7 +150,10 @@ public class SMSBackupService extends BackupService
 			// If it fails - we have to reload the dates because some of the messages may be backed up
 			// even thought the backup was failed
 			if( messages.size() > 0 ) needReloadDates = true;
-			return messages;
+			ApiSync sync = new ApiSync();
+			sync.setMessages(messages);
+			sync.setContacts(getContactsFromMessages(messages));
+			return sync;
 		}
 		
 		private List<ApiMessage> getMessages( Date from, int num )
