@@ -1,13 +1,11 @@
 package com.uppidy.android.demo.app;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.social.connect.ConnectionRepository;
 
 import android.content.Intent;
