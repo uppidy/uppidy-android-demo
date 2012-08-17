@@ -1,9 +1,13 @@
 package com.uppidy.android.demo.app;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.social.connect.ConnectionRepository;
 
 import android.content.Intent;
@@ -17,6 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.uppidy.android.sdk.R;
+import com.uppidy.android.sdk.api.ApiBodyPart;
 import com.uppidy.android.sdk.api.ApiContact;
 import com.uppidy.android.sdk.api.ApiContactInfo;
 import com.uppidy.android.sdk.api.ApiContainer;
@@ -185,6 +190,19 @@ public class UppidyActivity extends AbstractAsyncActivity {
 				message.setFrom(message.isSent() ? myInfo : contactInfo);
 				message.setTo(Collections.singletonList(message.isSent() ? contactInfo : myInfo));
 				message.setText("Fake message generated at " + message.getSentTime());
+				
+				ApiBodyPart part = new ApiBodyPart();
+				part.setContentType("image/jpeg");
+				InputStream in = getResources().getAssets().open("icon.jpg");
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				byte[] buffer = new byte[1024];
+			    for (int read; (read = in.read(buffer)) > -1; baos.write(buffer, 0, read));
+			    baos.flush();
+				in.close();
+				part.setData(baos.toByteArray());
+				part.setFileName("icon.jpg");
+				// part.setResource(new UrlResource(new URL("https://app.uppidy.com/static/images/video_intro.jpg")) );
+				message.setParts(Collections.singletonList(part));
 				
 				sync.setMessages(Collections.singletonList(message));
 				
