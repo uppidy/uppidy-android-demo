@@ -34,10 +34,13 @@
         <activity android:name=".UppidyBrowseActivity" />
         <activity android:name=".UppidyLoadActivity" />
 
-        <service android:name=".SMSBackupService" >
+        <service 
+            android:name=".SMSBackupService"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.uppidy.android.sdk.backup.BACKUP_ALL" />
                 <action android:name="com.uppidy.android.demo.SMS_BACKUP" />
+                <action android:name="com.uppidy.android.demo.MMS_BACKUP" />
             </intent-filter>
         </service>
     </application>
