@@ -1,11 +1,10 @@
 package com.uppidy.android.demo.app;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
+import org.springframework.core.io.AssetResource;
+import org.springframework.social.RejectedAuthorizationException;
 import org.springframework.social.connect.ConnectionRepository;
 
 import android.content.Intent;
@@ -74,6 +73,7 @@ public class UppidyActivity extends AbstractAsyncActivity {
 
 	private void disconnect() {
 		this.connectionRepository.removeConnections(this.connectionFactory.getProviderId());
+		getApplicationContext().cleanup();
 	}
 
 	private void showConnectOption() {
@@ -156,17 +156,13 @@ public class UppidyActivity extends AbstractAsyncActivity {
 		@Override
 		protected String doInBackground(Void... params) {
 			try {
+				getApplicationContext().init();
+				
 				Uppidy uppidy = getApplicationContext().getConnectionRepository().findPrimaryConnection(Uppidy.class).getApi();
 				
 				String containerId = getApplicationContext().getContainerId();
 				ApiContainer container = getApplicationContext().getContainer();
 				
-				if(container == null && containerId != null) {
-					List<ApiContainer> containers = uppidy.backupOperations().listContainers(Collections.singletonMap("id", containerId));
-					if(!containers.isEmpty()) {
-						container = containers.get(0);
-					}
-				}
 				if(container == null) {
 					return "Container is not initialized";
 				}
@@ -176,6 +172,7 @@ public class UppidyActivity extends AbstractAsyncActivity {
 				ApiContactInfo myInfo = container.getOwner();
 				
 				ApiSync sync = new ApiSync();
+				sync.setRef("sync:1");
 				sync.setClientVersion("12.07");
 
 				ApiContactInfo contactInfo = new ApiContactInfo();
@@ -183,6 +180,7 @@ public class UppidyActivity extends AbstractAsyncActivity {
 				contactInfo.setAddress("8181868174");
 
 				ApiMessage message = new ApiMessage();
+				message.setRef("message:1");
 				message.setSentTime(new Date());
 				message.setSent(Math.random() > 0.5);				
 				message.setFrom(message.isSent() ? myInfo : contactInfo);
@@ -190,21 +188,17 @@ public class UppidyActivity extends AbstractAsyncActivity {
 				message.setText("Fake message generated at " + message.getSentTime());
 				
 				ApiBodyPart part = new ApiBodyPart();
+				part.setRef("part:1");
 				part.setContentType("image/jpeg");
-				InputStream in = getResources().getAssets().open("icon.jpg");
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				byte[] buffer = new byte[1024];
-			    for (int read; (read = in.read(buffer)) > -1; baos.write(buffer, 0, read));
-			    baos.flush();
-				in.close();
-				part.setData(baos.toByteArray());
 				part.setFileName("icon.jpg");
+				part.setData(new AssetResource(getResources().getAssets(), "icon.jpg"));
 				// part.setResource(new UrlResource(new URL("https://app.uppidy.com/static/images/video_intro.jpg")) );
 				message.setParts(Collections.singletonList(part));
 				
 				sync.setMessages(Collections.singletonList(message));
 				
 				ApiContact contact = new ApiContact();
+				contact.setRef("contact:1");
 				contact.setName(contactInfo.getName());
 				contact.setAddressByType(Collections.singletonMap("phone", Collections.singletonList(contactInfo.getAddress())));
 				
@@ -212,9 +206,17 @@ public class UppidyActivity extends AbstractAsyncActivity {
 
 				uppidy.backupOperations().sync(containerId, sync);
 				
+				uppidy.backupOperations().upload(containerId, message.getParts());				
 				
 				return "The following sync is done: " + sync;
 
+			} catch (RejectedAuthorizationException raex) {
+				Log.e(TAG, raex.getLocalizedMessage(), raex);
+				
+				disconnect();
+				showConnectOption();
+				
+				return "Rejected authorization: " + raex.getLocalizedMessage();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
 			

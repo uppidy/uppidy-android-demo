@@ -1,6 +1,5 @@
 package com.uppidy.android.demo.app;
 
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,7 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.util.FileCopyUtils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -131,6 +132,7 @@ public class SMSBackupService extends BackupService
 			if( messages.size() > 0 ) 
 			{
 				sync = new ApiSync();
+				sync.setRef("sync:" + System.currentTimeMillis());
 				sync.setMessages(messages);
 				sync.setContacts(getContactsFromMessages(messages));
 			}
@@ -209,7 +211,7 @@ public class SMSBackupService extends BackupService
 			int type = cursor.getInt(cursor.getColumnIndexOrThrow("m_type"));
 			
 			ApiMessage m = new ApiMessage();
-			m.setId( id );
+			m.setRef( "message:" + id );
 			m.setSentTime( new Date(date) );
 			
 			// get recipients
@@ -258,26 +260,19 @@ public class SMSBackupService extends BackupService
 			final String text = curPart.getString(curPart.getColumnIndex("text"));
 
 			ApiBodyPart part = new ApiBodyPart();
-			part.setId(id);
+			part.setRef("part:" + id);
 			part.setContentType(contentType);
 			part.setFileName(fileName);
 
 			// extract part body
 			if (contentType.startsWith("text/") && !TextUtils.isEmpty(text)) {
-				part.setData(text.getBytes("UTF-8"));
-			} else if (contentType.equalsIgnoreCase("application/smil")) {
-				// silently ignore SMIL stuff
+				part.setData(new ByteArrayResource(text.getBytes("UTF-8")));
 			} else {
-				final Uri partUri = Uri.withAppendedPath(MMS_URI, "part/" + id);
+				Uri partUri = Uri.withAppendedPath(MMS_URI, "part/" + id);
 				InputStream in = getContentResolver().openInputStream(partUri);
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				byte[] buffer = new byte[1024];
-				for (int read; (read = in.read(buffer)) > -1; baos.write(buffer, 0, read));
-				baos.flush();
-				in.close();
-				part.setData(baos.toByteArray());
-			}
-			
+				byte[] data = FileCopyUtils.copyToByteArray(in);
+				part.setData(new ByteArrayResource(data));
+			}			
 		}
 
         if (curPart != null) curPart.close();
@@ -309,7 +304,7 @@ public class SMSBackupService extends BackupService
 			Long smsDate = cursor.getLong(cursor.getColumnIndexOrThrow("date"));
 			int type = cursor.getInt(cursor.getColumnIndexOrThrow("type"));
 			ApiMessage m = new ApiMessage();
-			m.setId( mID );
+			m.setRef( "message:" + mID );
 			ApiContactInfo other = new ApiContactInfo();
 			other.setAddress(smsAddress);
 			switch( type )
@@ -354,6 +349,7 @@ public class SMSBackupService extends BackupService
 	{
 		if (phoneNumber == null ) return null; 
 		ApiContact contact = new ApiContact();
+		contact.setRef("contact:" + phoneNumber);
 		// temp variables to hold the contact information
 		String name = phoneNumber;
 		String number = phoneNumber;

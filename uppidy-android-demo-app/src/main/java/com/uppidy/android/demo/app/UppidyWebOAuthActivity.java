@@ -1,9 +1,5 @@
 package com.uppidy.android.demo.app;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.DuplicateConnectionException;
@@ -11,21 +7,17 @@ import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Parameters;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.uppidy.android.sdk.R;
-import com.uppidy.android.sdk.api.ApiContainer;
 import com.uppidy.android.sdk.api.Uppidy;
 import com.uppidy.android.sdk.connect.UppidyConnectionFactory;
 
@@ -183,51 +175,14 @@ public class UppidyWebOAuthActivity extends AbstractWebViewActivity {
 					Log.w(TAG, "Could not create connection", e);
 				}
 
-				initContainer();
+				getApplicationContext().init();
+				
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
 			}
 			return connection;
 		}
 		
-		private void initContainer() {
-			MainApplication ctx = getApplicationContext();
-			Uppidy uppidy = connectionRepository.findPrimaryConnection(Uppidy.class).getApi();
-			Map<String, String> queryParams = new HashMap<String, String>();
-			String containerId = ctx.getContainerId();
-			String phoneNumber = null;
-			String deviceId = null;
-			if(containerId != null) {
-				queryParams.put("id", containerId);
-			} else {
-				// Returns the phone number string for line 1, for example, the MSISDN for a GSM phone. 
-				// Return null if it is unavailable.
-				// TODO (AR): apparently it returns empty string if number is not available
-				phoneNumber = ((TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number();
-				if (phoneNumber == null || phoneNumber.length() == 0) {
-					// Returns the unique device ID, for example, the IMEI for GSM and the MEID or ESN for CDMA phones. 
-					// Return null if device ID is not available. 
-					deviceId = ((TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-					queryParams.put("deviceId", deviceId);					
-				} else {
-					queryParams.put("number", phoneNumber);
-				}
-			}
-			ApiContainer container = null;
-			List<ApiContainer> containers = uppidy.backupOperations().listContainers(queryParams);
-			if(containers.isEmpty()) {
-				Map<String, Object> parameters = new HashMap<String, Object>();
-				if(phoneNumber != null && phoneNumber.length() > 0) parameters.put("number", phoneNumber);
-				if(deviceId != null && deviceId.length() > 0) parameters.put("deviceId", deviceId);
-				parameters.put("description", Build.MODEL);
-				container = uppidy.backupOperations().createContainer(parameters);
-			} else {
-				container = containers.get(0);
-			}
-			ctx.setContainer(container);
-			ctx.setContainerId(container.getId());
-		}
-
 		@Override
 		protected void onPostExecute(Connection<Uppidy> result) {
 			// after the network request completes, hide the progress indicator
