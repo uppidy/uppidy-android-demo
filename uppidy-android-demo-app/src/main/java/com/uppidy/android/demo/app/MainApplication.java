@@ -9,6 +9,7 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.sqlite.SQLiteConnectionRepository;
 import org.springframework.social.connect.sqlite.support.SQLiteConnectionRepositoryHelper;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
+import org.springframework.social.oauth2.AccessGrant;
 
 import android.app.Application;
 import android.content.Context;
@@ -22,6 +23,7 @@ import com.uppidy.android.sdk.api.ApiContactInfo;
 import com.uppidy.android.sdk.api.ApiContainer;
 import com.uppidy.android.sdk.api.Uppidy;
 import com.uppidy.android.sdk.connect.UppidyConnectionFactory;
+import com.uppidy.android.sdk.connect.UppidyOAuth2Template;
 
 /**
  * @author arudnev@uppidy.com
@@ -87,6 +89,10 @@ public class MainApplication extends Application {
 	
 	public boolean setContainerId(String containerId) {
 		return getSettings().edit().putString("ContainerId", containerId).commit();
+	}
+	
+	public AccessGrant login(String username, String password) {
+		return ((UppidyOAuth2Template) getUppidyConnectionFactory().getOAuthOperations()).login(username, password, null);
 	}
 	
 	public Map<String, String> getContainerSearchParams() {
