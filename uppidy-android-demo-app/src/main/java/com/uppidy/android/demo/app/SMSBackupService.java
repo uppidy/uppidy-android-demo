@@ -27,6 +27,7 @@ import com.uppidy.android.sdk.api.ApiContact;
 import com.uppidy.android.sdk.api.ApiContactInfo;
 import com.uppidy.android.sdk.api.ApiMessage;
 import com.uppidy.android.sdk.api.ApiSync;
+import com.uppidy.android.sdk.api.Uppidy;
 import com.uppidy.android.sdk.backup.BackupService;
 import com.uppidy.android.sdk.backup.MessageProvider;
 
@@ -78,9 +79,9 @@ public class SMSBackupService extends BackupService
 	}
 	
 	@Override
-	protected ConnectionRepository getUppidyConnectionRepository()
+	protected Uppidy getUppidy()
 	{
-		return appContext.getConnectionRepository();
+		return appContext.getConnectionRepository().findPrimaryConnection(Uppidy.class).getApi();
 	}
 	
 	@Override
