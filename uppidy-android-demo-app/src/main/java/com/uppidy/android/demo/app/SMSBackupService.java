@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.util.FileCopyUtils;
 
 import android.content.Context;

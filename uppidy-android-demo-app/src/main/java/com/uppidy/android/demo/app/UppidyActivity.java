@@ -213,9 +213,6 @@ public class UppidyActivity extends AbstractAsyncActivity {
 			} catch (RejectedAuthorizationException raex) {
 				Log.e(TAG, raex.getLocalizedMessage(), raex);
 				
-				disconnect();
-				showConnectOption();
-				
 				return "Rejected authorization: " + raex.getLocalizedMessage();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -228,6 +225,10 @@ public class UppidyActivity extends AbstractAsyncActivity {
 		protected void onPostExecute(String result) {
 			dismissProgressDialog();
 			showResult(result);
+			if(result.startsWith("Rejected authorization")) {				
+				disconnect();
+				showConnectOption();
+			}
 		}
 	}
 
