@@ -120,6 +120,9 @@ public class MainApplication extends Application {
 		String deviceId = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
 		if (deviceId != null && deviceId.length() > 0) result.setDeviceId(deviceId);
 		result.setDescription(Build.MODEL);
+		result.setModel(Build.MODEL);
+		result.setVersion("12.08");
+		result.setType("ANDROID");
 		// this is required to automatically update container data with modifications from the server
 		result.setRef(phoneNumber + ":" + deviceId);
 		return result;		
